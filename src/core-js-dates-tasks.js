@@ -198,25 +198,8 @@ function getCountWeekendsInMonth(month, year) {
  * Date(2024, 0, 31) => 5
  * Date(2024, 1, 23) => 8
  */
-function getWeekNumberByDate(date) {
-  const targetDate = new Date(date);
-  targetDate.setUTCHours(0, 0, 0, 0);
-  const dayOfWeek = targetDate.getUTCDay();
-  const thursday = new Date(targetDate);
-  thursday.setUTCDate(
-    targetDate.getUTCDate() + 3 - (dayOfWeek === 0 ? 7 : dayOfWeek)
-  );
-  const firstThursday = new Date(Date.UTC(thursday.getUTCFullYear(), 0, 4));
-  const firstThursdayDay = firstThursday.getUTCDay();
-  firstThursday.setUTCDate(
-    firstThursday.getUTCDate() +
-      3 -
-      (firstThursdayDay === 0 ? 7 : firstThursdayDay)
-  );
-  const weekNumber =
-    Math.round((thursday - firstThursday) / (7 * 24 * 60 * 60 * 1000)) + 1;
-
-  return weekNumber;
+function getWeekNumberByDate(/* date */) {
+  throw new Error('Not implemented');
 }
 
 /**
@@ -233,10 +216,10 @@ function getWeekNumberByDate(date) {
 function getNextFridayThe13th(date) {
   const currentDate = new Date(date);
   currentDate.setDate(13);
-  while (true) {
-    if (currentDate.getDay() === 5) return new Date(currentDate);
+  while (currentDate.getDay() !== 5) {
     currentDate.setMonth(currentDate.getMonth() + 1);
   }
+  return new Date(currentDate);
 }
 
 /**
@@ -281,21 +264,8 @@ function getQuarter(date) {
  * { start: '01-01-2024', end: '15-01-2024' }, 1, 3 => ['01-01-2024', '05-01-2024', '09-01-2024', '13-01-2024']
  * { start: '01-01-2024', end: '10-01-2024' }, 1, 1 => ['01-01-2024', '03-01-2024', '05-01-2024', '07-01-2024', '09-01-2024']
  */
-function getWorkSchedule(period, countWorkDays, countOffDays) {
-  const startDate = new Date(period.start.split('-').reverse().join('-'));
-  const endDate = new Date(period.end.split('-').reverse().join('-'));
-  const schedule = [];
-  const currentDate = new Date(startDate);
-
-  while (currentDate <= endDate) {
-    const day = String(currentDate.getDate()).padStart(2, '0');
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    const year = currentDate.getFullYear();
-    schedule.push(`${day}-${month}-${year}`); // Add work day to schedule
-    currentDate.setDate(currentDate.getDate() + countWorkDays + countOffDays); // Skip work and off days
-  }
-
-  return schedule;
+function getWorkSchedule(/* period, countWorkDays, countOffDays */) {
+  throw new Error('Not implemented');
 }
 
 /**
